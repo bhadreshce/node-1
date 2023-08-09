@@ -23,8 +23,9 @@ var b = 5
 //a %= b //a = a-b
 // console.log(a
 
-
-)
+// )
 
 //bitwise
-console.log(8 << 1)
+// console.log(8 << 1)
+
+console.log(typeof true)
