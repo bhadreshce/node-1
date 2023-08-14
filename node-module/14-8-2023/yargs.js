@@ -4,7 +4,7 @@ yargs.command({
   command: 'create',
   builder: {
     name: {
-      type: Object,
+      type: Object, //Array boolean string number 
       demandOption: true,
     },
     surname: {
@@ -14,7 +14,7 @@ yargs.command({
   },
 
   handler: function (arg) {
-    console.log(arg.name)
+    console.log(arg.name.AGE)
   },
 })
 
