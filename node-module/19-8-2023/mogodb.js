@@ -9,51 +9,65 @@ const MongoClient = mongodb.MongoClient
 
 MongoClient.connect(url).then((res) => {
   const mydb = res.db('emp')
-  mydb.createCollection('students').then(() => {
+  // mydb.createCollection('students').then(() => {
 
-  })
+  // })
   //insert data in table
-  mydb
-    .collection('employee')
-    .insertOne({ id: 2, name: 'rajesh', age: 20, salary: 60000 })
-    .then((res) => {
-      console.log(res)
-    })
+  // mydb
+  //   .collection('employee')
+  //   .insertOne({ id: 2, name: 'rajesh', age: 20, salary: 60000 })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
 
-//  insert many data
-  mydb.collection('temp').insertMany([
-    { id: 3, name: 'rajesh', age: 20, salary: 60000 },
-    { id: 4, name: 'ramesh', age: 40, salary: 60000 },
-  ])
+  //  insert many data
+  // mydb.collection('temp').insertMany([
+  //   { id: 3, name: 'rajesh', age: 20, salary: 60000 },
+  //   { id: 4, name: 'ramesh', age: 40, salary: 60000 },
+  // ])
 
   //edit data
 
-  mydb
-    .collection('temp')
-    .updateOne({ id: 3 }, { $set: { name: 'ramesh' } })
-    .then((res) => {
-      console.log(res)
-    })
+  // mydb
+  //   .collection('temp')
+  //   .updateOne({ id: 3 }, { $set: { name: 'ramesh' } })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
 
   //update multiple
 
-  mydb
-    .collection('temp')
-    .updateMany({ name: 'ramesh' }, { $set: { salary: 100000 } })
+  // mydb
+  //   .collection('temp')
+  //   .updateMany({ name: 'ramesh' }, { $set: { salary: 100000 } })
 
   //delete one
 
-  mydb
-    .collection('temp')
-    .deleteOne({ id: 3 })
-    .then(() => {})
+  // mydb
+  //   .collection('temp')
+  //   .deleteOne({ id: 3 })
+  //   .then(() => {})
 
   //delete many
 
+  // mydb
+  //   .collection('employee')
+  //   .deleteMany({
+  //     id: 2,
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+
+  // view data
+
   mydb
-    .collection('temp')
-    .deleteMany({ id: 4 })
-    .then(() => {})
+    .collection('employee')
+    .find({})
+    .toArray()
+    .then((res) => {
+      console.log(res)
+    })
 
   // console.log(database)
 })

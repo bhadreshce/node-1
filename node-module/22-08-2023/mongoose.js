@@ -27,7 +27,7 @@ const stdSchema = new mongoose.Schema({
 const stdModel = new mongoose.model('user', stdSchema)
 
 addData = new stdModel({
-  username: 'jayesh',
+  username:34434,
   email: 'jayes1h@gmail.com',
   age: 20,
   marks: 30,
