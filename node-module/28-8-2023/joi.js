@@ -2,10 +2,6 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
 
-const dbUrl = 'mongodb://127.0.0.1:27017/std'
-mongoose.set('strictQuery', true) //mongoose configuration
-
-mongoose.connect(dbUrl).then(() => {})
 
 function userValidate(user) {
   const JoiSchema = Joi.object({
@@ -24,7 +20,7 @@ const user = {
   marks: 30,
 }
 
-const getRespose = userValidate(user)
+const getRespose = userValidate(user) 
 // console.log(getRespose)
 
 if (getRespose.error) {
