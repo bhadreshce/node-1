@@ -1,11 +1,4 @@
-//database connection
 const mongoose = require('mongoose')
-const dbUrl = 'mongodb://127.0.0.1:27017/std'
-mongoose.set('strictQuery', true) //mongoose configuration
-mongoose.connect(dbUrl).then(() => {})
-
-// model creation for table
-
 const stdSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -14,6 +7,7 @@ const stdSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   age: {
     type: Number,
@@ -23,7 +17,6 @@ const stdSchema = new mongoose.Schema({
     type: Number,
   },
 })
-
 const stdModel = new mongoose.model('user', stdSchema)
 
-     
+module.exports = { stdModel }
