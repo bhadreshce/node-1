@@ -17,13 +17,4 @@ const postuserdata = async (req, res) => {
   res.status(200).json(req.body)
 }
 
-const updata = async (req, res) => {
-  var data = req.body
-  console.log(data[1])
-
-  stdModel.updateOne({ age: data[0].age }, { $set: data[1] }).then((result) => {
-    console.log(result)
-  })
-}
-
-module.exports = { Getproduct, getdata, postuserdata, updata }
+module.exports = { Getproduct, getdata, postuserdata }
