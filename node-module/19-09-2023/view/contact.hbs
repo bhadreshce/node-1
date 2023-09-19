@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 200px;
+            width: 200px;
+            border: 2px solid black;
+           
+        aecom
+        
+        }
+        .main{ 
+             display: flex;
+             flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>contact page</h1>
+    <div class="main">
+        {{#each data}}
+        <div class="box">
+            <h1>{{ this.username}}</h1>
+            <span>{{this.email}}</span>
+        
+        </div>
+        {{/each}}
+    </div>
+  
+      
+</body>
+</html>
