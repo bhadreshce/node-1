@@ -4,7 +4,7 @@ const register = async (req, res) => {
   const adddata = new usermodel(req.body)
   adddata.save()
 
-  res.render('index', { msg: 'data inserted suscce' })
+  res.redirect('/user')
 
   //   console.log(req.body)
 }
