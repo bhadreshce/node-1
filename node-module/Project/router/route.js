@@ -13,10 +13,33 @@ route.get('/delete/(:id)', (req, res) => {
   res.redirect('/user')
 })
 
+route.get('/edit/(:id)', (req, res) => {
+  console.log(req.params.id)
+  usermodel.find({ _id: req.params.id }).then((data) => {
+    console.log(data)
+    res.render('editform', { userdata: data[0] })
+  })
+})
+
 route.get('/user', (req, res) => {
   usermodel.find({}).then((data) => {
     res.render('listuser', { userdata: data })
   })
+})
+
+route.post('/update', (req, res) => {
+  console.log(req.body.id)
+  usermodel
+    .updateOne(
+      { _id: req.body.id },
+      {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      },
+    )
+    .exec()
+  res.redirect('/user')
 })
 
 route.post('/register', register)
