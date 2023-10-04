@@ -2,7 +2,9 @@ const route = require('express').Router()
 
 const { usermodel } = require('../model/user')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const { register } = require('../controller/register')
+const auth = require('../middleware/auth')
 route.get('/', (req, res) => {
   res.render('login')
 })
@@ -11,26 +13,27 @@ route.get('/do_register', (req, res) => {
   res.render('index')
 })
 
-route.post('/do_login', (req, res) => {
+route.post('/do_login', async (req, res) => {
   email = req.body.email
   pass = req.body.password
   console.log(email)
 
-  userdata = usermodel.findOne({ email: email }).then((data) => {
-    console.log(data)
+  userdata = await usermodel.findOne({ email: email })
+  console.log(userdata)
+  var isvalid = await bcrypt.compare(pass, userdata.password)
 
-    if (!data) {
-      res.render('login')
-    } else {
-      isvalid = bcrypt.compare(req.body.password, data.password).then((pas) => {
-        if (pas) {
-          res.redirect('/user')
-        } else {
-          res.render('login')
-        }
-      })
-    }
-  })
+  console.log(isvalid)
+  if (isvalid) {
+    console.log('hhhhhh')
+    var token = await jwt.sign({ _id: userdata._id }, 'mytoken')
+    userdata.Tokens = userdata.Tokens.concat({ token: token })
+
+    userdata.save()
+    res.cookie('jwt', token)
+    res.redirect('/user')
+  } else {
+    res.render('login')
+  }
 })
 
 route.get('/delete/(:id)', (req, res) => {
@@ -47,7 +50,7 @@ route.get('/edit/(:id)', (req, res) => {
   })
 })
 
-route.get('/user', (req, res) => {
+route.get('/user', auth, (req, res) => {
   usermodel.find({}).then((data) => {
     res.render('listuser', { userdata: data })
   })
