@@ -13,6 +13,11 @@ route.get('/do_register', (req, res) => {
   res.render('index')
 })
 
+route.get('/logout', (req, res) => {
+  res.clearCookie('jwt')
+  res.redirect('/')
+})
+
 route.post('/do_login', async (req, res) => {
   email = req.body.email
   pass = req.body.password
@@ -24,7 +29,6 @@ route.post('/do_login', async (req, res) => {
 
   console.log(isvalid)
   if (isvalid) {
-    console.log('hhhhhh')
     var token = await jwt.sign({ _id: userdata._id }, 'mytoken')
     userdata.Tokens = userdata.Tokens.concat({ token: token })
 
