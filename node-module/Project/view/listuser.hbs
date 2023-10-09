@@ -15,7 +15,7 @@
 
         <thead>
             <tr>
-              
+                <th scope="col">Image</th>
                 <th scope="col">username</th>
                 <th scope="col">email</th>
                 <th scope="col">Action</th>
@@ -25,7 +25,7 @@
         <tbody>
             {{#each userdata}}
             <tr>
-            
+              <td><img height="50px" width="50px" src="img/{{this.img}}" alt=""></td>
                 <td>{{this.username}}</td>
                 <td>{{this.email}}</td>
                 <td><a href="/delete/{{this._id}}"><i class="bi bi-trash-fill"></i></a>

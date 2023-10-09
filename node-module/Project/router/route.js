@@ -5,6 +5,20 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { register } = require('../controller/register')
 const auth = require('../middleware/auth')
+
+const multer = require('multer')
+
+const storageEngine = multer.diskStorage({
+  destination: './public/img',
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}--${file.originalname}`)
+  },
+})
+
+const upload = multer({
+  storage: storageEngine,
+})
+
 route.get('/', (req, res) => {
   res.render('login')
 })
@@ -75,6 +89,6 @@ route.post('/update', (req, res) => {
   res.redirect('/user')
 })
 
-route.post('/register', register)
+route.post('/register', upload.single('file'), register)
 
 module.exports = route
