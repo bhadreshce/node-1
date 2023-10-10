@@ -7,6 +7,7 @@ const { register } = require('../controller/register')
 const auth = require('../middleware/auth')
 
 const multer = require('multer')
+const fs = require('fs')
 
 const storageEngine = multer.diskStorage({
   destination: './public/img',
@@ -27,7 +28,15 @@ route.get('/do_register', (req, res) => {
   res.render('index')
 })
 
-route.get('/logout', (req, res) => {
+route.get('/logout', async (req, res) => {
+  token = req.cookies.jwt
+
+  const data = await jwt.verify(token, 'mytoken')
+  const udata = await usermodel.findOne({ _id: data._id })
+  udata.Tokens = udata.Tokens.filter((result) => {
+    return result.token != token
+  })
+  udata.save()
   res.clearCookie('jwt')
   res.redirect('/')
 })
@@ -54,9 +63,13 @@ route.post('/do_login', async (req, res) => {
   }
 })
 
-route.get('/delete/(:id)', (req, res) => {
-  console.log(req.params.id)
-  usermodel.deleteOne({ _id: req.params.id }).exec()
+route.get('/delete/(:id)', async (req, res) => {
+  // console.log(req.params.id)
+  Userdata = await usermodel.findOne({ _id: req.params.id })
+  // console.log(Userdata.img)
+  await fs.unlinkSync('./public/img/' + Userdata.img)
+  await usermodel.deleteOne({ _id: req.params.id }).exec()
+
   res.redirect('/user')
 })
 
